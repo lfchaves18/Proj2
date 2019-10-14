@@ -41,7 +41,7 @@ namespace Proj2
 
             while (!uint.TryParse(idadeAux, out idade) || (idade == 0))                       //validando se a idade do aluno é maior que zero e se é um número
             {
-                Console.WriteLine("Invalido! Qual o número de alunos você deseja inserir? ");
+                Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
                 idadeAux = Console.ReadLine();
             }
             Idade = idade;

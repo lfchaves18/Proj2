@@ -31,7 +31,7 @@ namespace Proj2
 
             while (!uint.TryParse(idadeAux, out idade) || (idade == 0))                       //validar se a idade é um numero e não é igual a zero
             {
-                Console.Write("Invalido! Qual o número de alunos você deseja inserir? ");
+                Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
                 idadeAux = Console.ReadLine();
             }
             Idade = idade; // passando o valor da variavel auxiliar para o atributo

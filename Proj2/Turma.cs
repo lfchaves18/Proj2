@@ -28,7 +28,7 @@ namespace Proj2
         public void InserirProfessor() => p.AddProfessor(); //metodo para adicionar o professor
 
 
-        public void InserirAluno() //metodo para aficionar os alunos
+        public void InserirAluno() //metodo para adicionar os alunos
         {
             Console.Write("Qual o número de alunos você deseja inserir? ");
             string nAux = Console.ReadLine();
