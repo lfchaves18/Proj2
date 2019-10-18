@@ -1,59 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Proj2
 {
     class Turma
     {
-        public uint Numero { get; set; }
-        public List<Aluno> ListaAluno { get; private set; } = new List<Aluno>(); //lista de alunos
+        public int NumeroTurma { get; set; }
+        public uint NumPessoaNaTurma { get; set; }
+        public List<Aluno> ListaAlunoTurma { get; set; } = new List<Aluno>();
+        public Professor ProfNaTurma { get; set; }
 
-        Professor p = new Professor();
 
-        public void NumeroDaTurma() //metodo que pega um número para ser o número da turma
+        public void AdicionarTurma()
         {
-            Console.Write("Qual o número da turma? ");
-            string nAux = Console.ReadLine();
-            uint numero;
-
-            while (!uint.TryParse(nAux, out numero) || (numero == 0))          //validar idade
+            //-------------Numero de pessoas na turma-----------
+            Console.WriteLine("Quantos alunos podem ter essa turma? ");
+            string numeroTurmaAux = Console.ReadLine();
+            uint numeroTurma;
+            while (!uint.TryParse(numeroTurmaAux, out numeroTurma) || (numeroTurma == 0))                       //validando se a idade do aluno é maior que zero e se é um número
             {
-                Console.Write("Invalido! Qual o número da turma? ");
-                nAux = Console.ReadLine();
+                Console.WriteLine($"Invalido! Quantos alunos podem ter na turma: ");
+                numeroTurmaAux = Console.ReadLine();
             }
-            Numero = numero;
+            NumPessoaNaTurma = numeroTurma;
+
+            //---------------Numero da turma-----------------
+            Random rnd = new Random();
+            NumeroTurma = rnd.Next(0, 999999); // gerar número aleatorio 
+
+            Console.WriteLine("\nTurma cadastrada com sucesso\n");
+            
         }
 
-        public void InserirProfessor() => p.AddProfessor(); //metodo para adicionar o professor
+        public override string ToString() => $"Número da turma é: {NumeroTurma}, o maximo de pessoas que podem contar nela é: {NumPessoaNaTurma}\n";
 
 
-        public void InserirAluno() //metodo para adicionar os alunos
-        {
-            Console.Write("Qual o número de alunos você deseja inserir? ");
-            string nAux = Console.ReadLine();
-            uint numero;
-
-            while (!uint.TryParse(nAux, out numero) || (numero == 0))                       //validar idade
-            {
-                Console.Write("Invalido! Qual o número de alunos você deseja inserir? ");
-                nAux = Console.ReadLine();
-            }
-
-            for (int i = 1; i <= numero; i++)
-            {
-                Aluno a = new Aluno();
-                a.AdicionarAluno();
-                ListaAluno.Add(a);
-                if (a.NumeroMatricula == a.NumeroMatricula)
-                {
-                    Random rnd = new Random();
-                    a.NumeroMatricula = rnd.Next(0, 999999);
-                }
-            }
-        }
-
-        public string MostrarProfessor() => p.Mostrar(); //mostrar professor
-        public uint MostrarNumero() => Numero; //mostrar numero
     }
 }

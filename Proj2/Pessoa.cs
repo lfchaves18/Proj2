@@ -12,6 +12,7 @@ namespace Proj2
 
         public bool ValidarPalavras(string s) //  metodo para validar as palavras
         {
+            if (string.IsNullOrEmpty(s)) return false;
             foreach (char c in s) // percorre letra por letra da string
             {
                 if (!char.IsLetter(c)) return false; // negando o if, então se percorre todas as letra e for diferente da string, retorna falso

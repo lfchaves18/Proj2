@@ -1,4 +1,5 @@
-﻿using System;
+﻿﻿using System;
+using System.Collections.Generic;
 
 namespace Proj2
 {
@@ -9,36 +10,31 @@ namespace Proj2
         public string RespBolsista { get; set; }
 
 
-        public Aluno()
-        {
-
-        }
         public void AdicionarAluno() // metodo para adicionar o aluno
         {
-
-
+            
+            //----------------Inserir o nome do aluno------------------
             Console.WriteLine("Qual o nome do(a) aluno(a): ");
             Nome = Console.ReadLine();
-            while ((!ValidarPalavras(Nome)) || string.IsNullOrEmpty(Nome) || (Nome.Length < 3)) // validando o sexo do aluno atraves de um metodo, so pode ser letras e ter mais de tres caracteres, não pode ser nulo ou vazio
+            while ((!ValidarPalavras(Nome)) || (Nome.Length < 3)) // validando o sexo do aluno atraves de um metodo, so pode ser letras e ter mais de tres caracteres, não pode ser nulo ou vazio
             {
                 Console.WriteLine("Invalido! Qual o nome do(a) aluno?");
                 Nome = Console.ReadLine();
             }
 
-            Console.WriteLine($"Qual o sexo do(a) {Nome} \n Responda com 'Feminino' ou 'Masculino': ");
-            Sexo = Console.ReadLine();
-
-            while (Sexo != "Feminino" && Sexo != "Masculino" || string.IsNullOrEmpty(Sexo)) //validando o sexo do aluno que só tem duas opções: Femenino ou Masculino
+            //--------------Inserir o sexo do aluno-----------------
+            Console.WriteLine($"Qual o sexo do(a) {Nome} \n Responda com 'F' ou 'M': ");
+            Sexo = Console.ReadLine().Trim().ToUpper();
+            while (Sexo != "F" && Sexo != "M" || string.IsNullOrEmpty(Sexo)) //validando o sexo do aluno que só tem duas opções: Femenino ou Masculino
             {
-                Console.WriteLine($"Qual o sexo do(a) {Nome} \n Responda com 'Feminino' ou 'Masculino': ");
-                Sexo = Console.ReadLine();
+                Console.WriteLine($"Qual o sexo do(a) {Nome} \n Responda com 'F' ou 'M': ");
+                Sexo = Console.ReadLine().Trim().ToUpper();
             }
 
-
+            //----------Inserir o sexo do aluno-------------
             Console.WriteLine($"Qual a idade do(a) {Nome}: ");
             string idadeAux = Console.ReadLine();
             uint idade;
-
             while (!uint.TryParse(idadeAux, out idade) || (idade == 0))                       //validando se a idade do aluno é maior que zero e se é um número
             {
                 Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
@@ -46,33 +42,27 @@ namespace Proj2
             }
             Idade = idade;
 
-            Console.WriteLine($"{Nome} é bolsista: \n Responda com 'Sim' ou 'Não': ");
-
-            string resp = Console.ReadLine();
-            bool bolsista = false;
-
-            while (resp != "Sim" && resp != "Não") //validar se é bolsista, só aceita Sim ou Não, não pode ser nulo
+            //--------------Ver se o aluno é bolsista-------------------
+            Console.WriteLine($"{Nome} é bolsista: \n Responda com 'S' ou 'N': ");
+            string resp = Console.ReadLine().ToUpper().Trim();
+            bool bolsista;
+            while (resp != "S" && resp != "N") //validar se é bolsista, só aceita Sim ou Não, não pode ser nulo
             {
-                Console.WriteLine($"Invalido! {Nome} é bolsista: ");
-                resp = Console.ReadLine();
+                Console.WriteLine($"Invalido! {Nome} é bolsista: \n Responda com 'S' ou 'N':  ");
+                resp = Console.ReadLine().ToUpper().Trim();
             }
-            if (resp == "Sim")
-                bolsista = true;
+            if (resp == "S") bolsista = true;
+            else bolsista = false;
 
-            Bolsista = bolsista;
-            if (resp == "Sim")          //operação para dar resposta sobre a bolsa
-                RespBolsista = "é";
-            if (resp == "Não")
-                RespBolsista = "não é";
-
+            if (bolsista == true) RespBolsista = "é";
+            else if (bolsista == false) RespBolsista = "não é";
 
 
             Random rnd = new Random();
             NumeroMatricula = rnd.Next(0, 999999); // gerar número aleatorio 
-
-
-
-            Console.WriteLine();
         }
+
+        public override string ToString() => $"O(a) aluno(a): {Nome}, tem {Idade} anos, seu sexo é {Sexo} e {RespBolsista} bolsista. " +
+            $"Seu número de matricula é: {NumeroMatricula}\n";
     }
 }
