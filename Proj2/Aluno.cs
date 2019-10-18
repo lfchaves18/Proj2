@@ -33,13 +33,9 @@ namespace Proj2
 
             //----------Inserir o sexo do aluno-------------
             Console.WriteLine($"Qual a idade do(a) {Nome}: ");
-            string idadeAux = Console.ReadLine();
             uint idade;
-            while (!uint.TryParse(idadeAux, out idade) || (idade == 0))                       //validando se a idade do aluno é maior que zero e se é um número
-            {
-                Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
-                idadeAux = Console.ReadLine();
-            }
+            while (!uint.TryParse(Console.ReadLine(), out idade) || (idade == 0))                       //validando se a idade do aluno é maior que zero e se é um número
+            Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
             Idade = idade;
 
             //--------------Ver se o aluno é bolsista-------------------

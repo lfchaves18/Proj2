@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+
 
 namespace Proj2
 {
@@ -11,6 +10,7 @@ namespace Proj2
         public uint NumPessoaNaTurma { get; set; }
         public List<Aluno> ListaAlunoTurma { get; set; } = new List<Aluno>();
         public Professor ProfNaTurma { get; set; }
+        public Coordenador CoordNaTurma { get; set; }
 
 
         public void AdicionarTurma()
@@ -35,7 +35,6 @@ namespace Proj2
         }
 
         public override string ToString() => $"Número da turma é: {NumeroTurma}, o maximo de pessoas que podem contar nela é: {NumPessoaNaTurma}\n";
-
 
     }
 }

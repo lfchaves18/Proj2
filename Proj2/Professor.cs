@@ -7,6 +7,7 @@ namespace Proj2
     {
 
         public int NumeroRegistro { get; set; }
+        public Coordenador CoordDoProfessor { get; set; }
 
         public void AddProfessor()
         {
@@ -30,13 +31,12 @@ namespace Proj2
             }
 
             //------------Inserir a idade do professor-----------------
-            Console.WriteLine($"Qual a idade do(a) {Nome}: ");
-            string idadeAux = Console.ReadLine();
+            Console.WriteLine($"Qual a idade do(a) {Nome}: \n Ele deve ter entre 20 anos e 110 anos ");
             uint idade;
-            while (!uint.TryParse(idadeAux, out idade) || (idade == 0))                       //validar se a idade é um numero e não é igual a zero
+            while (!uint.TryParse(Console.ReadLine(), out idade) || (idade == 0))                       //validar se a idade é um numero e não é igual a zero
             {
                 Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
-                idadeAux = Console.ReadLine();
+                
             }
             Idade = idade; // passando o valor da variavel auxiliar para o atributo
 
@@ -44,10 +44,15 @@ namespace Proj2
             Random rnd = new Random();
             NumeroRegistro = rnd.Next(0, 999999);           // gerando um número aleatorio para ser o registro do professor
 
+            Console.WriteLine($"Qual é o coordenador do(a) {Nome}: ");
+            uint opcaoCoord;
+            while (!uint.TryParse(Console.ReadLine(), out opcaoCoord))                       
+            Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
+
 
         }
 
-        public override string ToString() => $"O professor: {Nome}, tem {Idade} anos, seu sexo é {Sexo}. Seu número de registro: {NumeroRegistro}\n";
+        public override string ToString() => $"O professor: {Nome}, tem {Idade} anos, seu sexo é {Sexo}. Seu número de registro: {NumeroRegistro}. O coordenador desse professor é:{CoordDoProfessor} \n";
 
     }
 }
