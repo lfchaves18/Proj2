@@ -132,7 +132,7 @@ namespace Proj2
                 while (!uint.TryParse(Console.ReadLine(), out opcaoTurma))      // valida se as informações passadas são as desejadas 
                     Console.WriteLine($"Invalido! Em qual turma deseja cadastrar o(a) coordenadores(a): "); // se não forem validas, vai ser pedido novamente
 
-                Console.WriteLine("Qual professor(a) você deseja cadastrar?\n Insira o Numero do coordenador: "); // pede para informar o coordenador que deseja cadastrar
+                Console.WriteLine("Qual coordenador você deseja cadastrar?\n Insira o numero: "); // pede para informar o coordenador que deseja cadastrar
                 uint opcaoCoord;
                 while (!uint.TryParse(Console.ReadLine(), out opcaoCoord))         // valida se as informações passadas são as desejadas
                     Console.WriteLine($"Invalido! Insira novamente o Numero do coordenador: "); // se não forem validas, vai ser pedido novamente 
@@ -200,9 +200,9 @@ namespace Proj2
                 Console.WriteLine("Qual aluno você deseja cadastrar?\n Insira o Numero de Matricula: ");
                 uint opcaoAluno;
                 while (!uint.TryParse(Console.ReadLine(), out opcaoAluno))                       //validando se a idade do aluno é maior que zero e se é um número  Console.WriteLine($"Invalido! Insira novamente o Numero de Matricula: ");
-                    Console.WriteLine("Em qual turma deseja cadastrar o aluno: ");
+                    Console.WriteLine("Invalido! Em qual turma deseja cadastrar o aluno: ");
 
-
+                Console.WriteLine("Em qual turma deseja cadastrar? \n Insira o numero da turma: ");
                 uint opcaoTurmaAlu;
                 while (!uint.TryParse(Console.ReadLine(), out opcaoTurmaAlu))                       //validando se a idade do aluno é maior que zero e se é um número
                     Console.WriteLine($"Invalido! Em qual turma deseja cadastrar o aluno: ");
@@ -218,6 +218,36 @@ namespace Proj2
                 }
                 else Console.WriteLine("A turma e/ou o(a) aluno(a) que você deseja inserir, não existem!");
             }
+        }
+        public void RemoverAlunoTurma()
+        {
+            foreach (Turma tur in ListaTurma)
+                Console.WriteLine($"{tur}\n");
+
+            foreach (Aluno a1 in ListaAluno)
+                Console.WriteLine($"{a1}\n");
+
+
+            Console.WriteLine("Qual aluno você deseja cadastrar?\n Insira o Numero de Matricula: ");
+            uint opcaoAluno;
+            while (!uint.TryParse(Console.ReadLine(), out opcaoAluno))                       //validando se a idade do aluno é maior que zero e se é um número  Console.WriteLine($"Invalido! Insira novamente o Numero de Matricula: ");
+                Console.WriteLine("Invalido! Em qual turma deseja cadastrar o aluno: ");
+
+
+            uint opcaoTurmaAlu;
+            while (!uint.TryParse(Console.ReadLine(), out opcaoTurmaAlu))                       //validando se a idade do aluno é maior que zero e se é um número
+                Console.WriteLine($"Invalido! Em qual turma deseja cadastrar o aluno: ");
+
+
+            Aluno aluno = ListaAluno.Find(buscaAluno => buscaAluno.NumeroMatricula == opcaoAluno);
+            Turma turma = ListaTurma.Find(buscaTurma => buscaTurma.NumeroTurma == opcaoTurmaAlu);
+
+            if (aluno != null && turma != null)
+            {
+                turma.ListaAlunoTurma.Remove(aluno);
+                foreach (Aluno alu in turma.ListaAlunoTurma) Console.WriteLine($"\n A turma {opcaoTurmaAlu} \n {aluno}\n");
+            }
+            else Console.WriteLine("A turma e/ou o(a) aluno(a) que você deseja inserir, não existem!");
         }
     }
 }
