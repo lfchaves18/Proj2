@@ -102,6 +102,7 @@ namespace Proj2
                                     }
                                     else
                                     {
+                                        Console.WriteLine("---------------------------------------------------------");
                                         foreach (Turma t in esc.ListaTurma)
                                         {
                                             Console.WriteLine($"A turma {t.NumeroTurma}, com limite de {t.NumPessoaNaTurma}: \n");
@@ -117,6 +118,7 @@ namespace Proj2
                                             {
                                                 Console.WriteLine($"Os alunos são: ");
                                                 foreach (Aluno a in t.ListaAlunoTurma) Console.WriteLine($"{a.Nome} - {a.Sexo} - {a.Idade} - {a.NumeroMatricula} - {a.RespBolsista} bolsita. \n");
+                                                Console.WriteLine("---------------------------------------------------------");
                                             }
                                         }
                                     }
@@ -198,6 +200,7 @@ namespace Proj2
                                     break;
 
                                 case 4://remover professores da turma *FALTA FAZER*
+                                    esc.RemoverProfessorTurma();
                                     Console.WriteLine("\nAperte ENTER para voltar ao menu");
                                     Console.ReadLine();
                                     Console.Clear();
@@ -246,7 +249,7 @@ namespace Proj2
                         break;
 
 
-                    //---------------------SUBMENU ALUNO-----------------------------
+                    //---------------------SUBMENU ALUNO---------------------------------
                     case 3:// sub meu aluno
                         uint opcaoMenuAluno;
 
@@ -301,7 +304,8 @@ namespace Proj2
                                     Console.Clear();
                                     break;
 
-                                case 4://remover aluno das turmas *FALTA FAZER*
+                                case 4://remover aluno das turmas *FALTA implemar as regras*
+                                    esc.RemoverAlunoTurma();
                                     break;
 
                                 case 5:
@@ -400,6 +404,7 @@ namespace Proj2
                                     Console.Clear();
                                     break;
                                 case 4: //remover coordenadores da turma*FALTA FAZER*
+                                    esc.RemoverCoordenadorTurma();
                                     break;
 
                                 case 5: // msotrar coordenadores

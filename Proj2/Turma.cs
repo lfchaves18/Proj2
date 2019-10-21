@@ -36,26 +36,7 @@ namespace Proj2
 
         }
 
-        /*public void MostarTurmas()
-        {
-            foreach (Turma t in esc.ListaTurma)
-            {
-                Console.WriteLine($"A turma {NumeroTurma}, com limite de {NumPessoaNaTurma}: \n");
-
-                if (CoordNaTurma == null) Console.WriteLine("Essa turma não tem coordenador.\n");
-                else Console.WriteLine($"O coordenador é:\n {CoordNaTurma.Nome} - {CoordNaTurma.Sexo} - {CoordNaTurma.Idade} - {CoordNaTurma.NumCoordenador}.\n");
-
-                if (ProfNaTurma == null) Console.WriteLine("Essa turma não tem professor.\n");
-                else Console.WriteLine($"O professor é: \n {ProfNaTurma.Nome} - {ProfNaTurma.Sexo} - {ProfNaTurma.Idade} - {ProfNaTurma.NumeroRegistro}.\n");
-
-                if (ListaAlunoTurma == null) Console.WriteLine("Essa turma não tem aluno.\n");
-                else
-                {
-                    Console.WriteLine($"Os alunos são: ");
-                    foreach (Aluno a in ListaAlunoTurma) Console.WriteLine($"{a.Nome} - {a.Sexo} - {a.Idade} - {a.NumeroMatricula} - {a.RespBolsista} bolsita. \n");
-                }
-            }
-        }*/
+        
         public override string ToString() => $"Número da turma é: {NumeroTurma}, o maximo de pessoas que podem contar nela é: {NumPessoaNaTurma}\n";
 
     }

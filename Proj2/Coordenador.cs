@@ -44,7 +44,7 @@ namespace Proj2
             NumCoordenador = rnd.Next(0, 999999);           // gerando um número aleatorio para ser o registro do professor
 
             Console.WriteLine("Coordenador cadastrado com sucesso");
-
+            
         }
         public override string ToString() => $"O professor: {Nome}, tem {Idade} anos, seu sexo é {Sexo}. Seu número de registro: {NumCoordenador}\n";
 
