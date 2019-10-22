@@ -7,7 +7,7 @@ namespace Proj2
         public uint Numero { get; set; }
 
         Escola esc = new Escola();
-
+        Turma tur = new Turma();
         public void AddMenu()
         {
             do
@@ -83,7 +83,7 @@ namespace Proj2
                                     Console.Clear();
                                     break;
 
-                                case 4:  //mostar turmas populadas *ERRADO*
+                                case 4:  //mostar turmas populadas 
                                     if (esc.ListaTurma.Count == 0) //verificar se existe alguma turma
                                     {
                                         Console.WriteLine("Não existem turmas cadastradas!\nDeseja cadastrar turmas (S ou N)?");
@@ -113,7 +113,7 @@ namespace Proj2
                                             if (t.ProfNaTurma == null) Console.WriteLine("Essa turma não tem professor.\n");
                                             else Console.WriteLine($"O professor é: \n {t.ProfNaTurma.Nome} - {t.ProfNaTurma.Sexo} - {t.ProfNaTurma.Idade} - {t.ProfNaTurma.NumeroRegistro}.\n");
 
-                                            if (t.ListaAlunoTurma == null) Console.WriteLine("Essa turma não tem aluno.\n");
+                                            if (t.ListaAlunoTurma.Count == 0) Console.WriteLine("Essa turma não tem aluno.\n");
                                             else
                                             {
                                                 Console.WriteLine($"Os alunos são: ");
@@ -164,10 +164,35 @@ namespace Proj2
                             switch (opcaoMenuProfessor)
                             {
                                 case 1://adicionar professor
-                                    Professor prof = new Professor();
-                                    prof.AddProfessor();
-                                    esc.ListaProfessor.Add(prof);
+                                    if (esc.ListaCoordenador.Count == 0)
+                                    {
+                                        Console.WriteLine("Não existem coordenadores cadastrados!\n Deseja cadastrar um novo coordenador? (S ou N)");
+                                        string resp = Console.ReadLine().ToUpper().Trim();
+                                        while (resp != "S" && resp != "N") // se a turma não existir, vai dar a opção se adicionar ou não
+                                        {
+                                            Console.WriteLine($"Invalido! Não existem turmas cadastradas!\nDeseja cadastrar turmas (S ou N)?  ");
+                                            resp = Console.ReadLine().ToUpper().Trim();
+                                        }
+                                        if (resp == "S")
+                                        {
+                                            Coordenador c = new Coordenador();
+                                            c.AddCoordenador();
+                                            esc.ListaCoordenador.Add(c);
 
+                                            Professor prof = new Professor();
+                                            prof.AddProfessor();
+                                            esc.ListaProfessor.Add(prof);
+                                            esc.ListaProfessorEspera.Add(prof);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Professor prof = new Professor();
+                                        prof.AddProfessor();
+                                        esc.ListaProfessor.Add(prof);
+                                        esc.ListaProfessorEspera.Add(prof);
+                                    }
+                                    
                                     Console.WriteLine("\nAperte ENTER para voltar ao menu");
                                     Console.ReadLine();
                                     Console.Clear();
@@ -193,7 +218,7 @@ namespace Proj2
 
                                 case 3: //adicionar professores a turma 
                                     esc.AtribuirProfessor();
-
+                                
                                     Console.WriteLine("\nAperte ENTER para voltar ao menu");
                                     Console.ReadLine();
                                     Console.Clear();
@@ -268,10 +293,11 @@ namespace Proj2
 
                             switch (opcaoMenuAluno)
                             {
-                                case 1://adicionar professor
+                                case 1://adicionar aluno
                                     Aluno aluno = new Aluno();
                                     aluno.AdicionarAluno();
                                     esc.ListaAluno.Add(aluno);
+                                    esc.ListaAlunoEspera.Add(aluno);
 
                                     Console.WriteLine("\nAperte ENTER para voltar ao menu");
                                     Console.ReadLine();
@@ -285,11 +311,15 @@ namespace Proj2
                                     {
                                         foreach (Aluno exibirAluno in esc.ListaAluno)
                                             Console.WriteLine(exibirAluno);
-                                        Console.WriteLine("Qual o número da matricula do aluno que deseja remover: ");
-                                        int opcaoAluno = int.Parse(Console.ReadLine());
 
-                                        Aluno a = esc.ListaAluno.Find(buscaAluno => buscaAluno.NumeroMatricula == opcaoAluno);
+                                        Console.WriteLine("Qual o número da matricula do aluno que deseja remover: ");
+                                        uint opcaoAluno1;
+                                        while (!uint.TryParse(Console.ReadLine(), out opcaoAluno1))                       //validando se a idade do aluno é maior que zero e se é um número  Console.WriteLine($"Invalido! Insira novamente o Numero de Matricula: ");
+                                            Console.WriteLine("Invalido! Em qual turma deseja cadastrar o aluno: ");
+
+                                        Aluno a = esc.ListaAluno.Find(buscaAluno => buscaAluno.NumeroMatricula == opcaoAluno1);
                                         esc.ListaAluno.Remove(a);
+                                        esc.ListaAlunoEspera.Remove(a);
                                     }
                                     Console.WriteLine("\nAperte ENTER para voltar ao menu");
                                     Console.ReadLine();
@@ -297,15 +327,46 @@ namespace Proj2
                                     break;
 
                                 case 3: //adicionar alunos a turma 
+                                    if (tur.ListaAlunoTurma.Count <= tur.NumPessoaNaTurma)
                                     esc.AtribuirAluno();
+                                    else Console.WriteLine("Turma cheia");
 
                                     Console.WriteLine("\nAperte ENTER para voltar ao menu");
                                     Console.ReadLine();
                                     Console.Clear();
                                     break;
 
-                                case 4://remover aluno das turmas *FALTA implemar as regras*
-                                    esc.RemoverAlunoTurma();
+                                case 4://remover aluno das turmas *FALTA implementar as regras*
+
+                                    if (esc.ListaTurma.Count == 0) Console.WriteLine("Não existem turmas disponiveis");
+                                    else if (esc.ListaAluno.Count == 0) Console.WriteLine("Não existem alunos disponiveis");
+                                    else
+                                    {
+                                        foreach (Turma t1 in esc.ListaTurma)
+                                            Console.WriteLine($"{t1}\n");
+                                        foreach (Aluno a1 in esc.ListaAluno)
+                                            Console.WriteLine($"{a1}\n");
+
+                                        Console.WriteLine("De qual turma voce deseja remover? \n Insira o numero da turma: ");
+                                        uint opcaoTurmaAlu;
+                                        while (!uint.TryParse(Console.ReadLine(), out opcaoTurmaAlu))                       //validando se a idade do aluno é maior que zero e se é um número
+                                            Console.WriteLine($"Invalido! Em qual de turma deseja remover o aluno: ");
+
+                                        Console.WriteLine("Qual aluno você deseja cadastrar?\n Insira o numero de matricula: ");
+                                        uint opcaoAluno;
+                                        while (!uint.TryParse(Console.ReadLine(), out opcaoAluno))                       //validando se a idade do aluno é maior que zero e se é um número  Console.WriteLine($"Invalido! Insira novamente o Numero de Matricula: ");
+                                            Console.WriteLine("Invalido! Em qual turma deseja cadastrar o aluno: ");
+
+                                        Aluno aluno1 = esc.ListaAluno.Find(buscaAluno => buscaAluno.NumeroMatricula == opcaoAluno);
+                                        Turma turma = esc.ListaTurma.Find(buscaTurma => buscaTurma.NumeroTurma == opcaoTurmaAlu);
+
+                                        if (aluno1 != null && turma != null)
+                                        {
+                                            esc.ListaAlunoEspera.Add(aluno1);
+                                            turma.ListaAlunoTurma.Remove(aluno1);
+                                        }
+                                        else Console.WriteLine("A turma e/ou o(a) aluno(a) que você deseja remover, não existem!");
+                                    }
                                     break;
 
                                 case 5:
@@ -327,7 +388,9 @@ namespace Proj2
                                         }
                                     }
                                     foreach (Aluno a1 in esc.ListaAluno)
-                                        Console.WriteLine(a1);
+                                        Console.WriteLine($"{a1}\n ");
+                                    foreach (Aluno aluTurma in tur.ListaAlunoTurma)
+                                        Console.WriteLine($"{aluTurma}\n");
 
                                     Console.WriteLine("\nAperte ENTER para voltar ao menu");
                                     Console.ReadLine();
@@ -458,7 +521,6 @@ namespace Proj2
                         Console.WriteLine("Opção Invalida!!");
                         break;
                 }
-
             } while (Numero != 0);
         }
     }

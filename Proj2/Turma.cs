@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace Proj2
 {
@@ -29,6 +29,8 @@ namespace Proj2
             //---------------Numero da turma-----------------
             Random rnd = new Random();
             NumeroTurma = rnd.Next(0, 999999); // gerar número aleatorio 
+            while (esc.ListaTurma.Any(buscaNum => buscaNum.NumeroTurma == NumeroTurma))
+                NumeroTurma = rnd.Next(0, 999999);
 
             Console.WriteLine("\nTurma cadastrada com sucesso\n");
             

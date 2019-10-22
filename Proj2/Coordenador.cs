@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Proj2
@@ -7,7 +8,7 @@ namespace Proj2
     class Coordenador : Pessoa
     {
         public int NumCoordenador { get; set; }
-
+        Escola esc = new Escola();
         public void AddCoordenador()
         {
             //------------------Adicionar nome do coordenador-----------------------------
@@ -30,9 +31,9 @@ namespace Proj2
             }
 
             //------------Inserir a idade do coordenador-----------------
-            Console.WriteLine($"Qual a idade do(a) {Nome}: \n Ele deve ter entre 20 anos e 110 anos ");
+            Console.WriteLine($"Qual a idade do(a) {Nome}: \n Ele deve ter entre 25 anos e 110 anos ");
             uint idade;
-            while (!uint.TryParse(Console.ReadLine(), out idade) || (idade == 0))                       //validar se a idade é um numero e não é igual a zero
+            while (!uint.TryParse(Console.ReadLine(), out idade) || (idade < 25) || (idade > 110))                       //validar se a idade é um numero e não é igual a zero
             {
                 Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
 
@@ -42,6 +43,9 @@ namespace Proj2
             //-----------------Gerar número do coordenador aleatorio--------------
             Random rnd = new Random();
             NumCoordenador = rnd.Next(0, 999999);           // gerando um número aleatorio para ser o registro do professor
+
+            while (esc.ListaCoordenador.Any(buscaNum => buscaNum.NumCoordenador == NumCoordenador))
+                NumCoordenador = rnd.Next(0, 999999);
 
             Console.WriteLine("Coordenador cadastrado com sucesso");
             

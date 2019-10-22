@@ -1,5 +1,6 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Proj2
 {
@@ -8,11 +9,11 @@ namespace Proj2
         public bool Bolsista { get; set; } // atributo para ver se o aluno é bolsista
         public int NumeroMatricula { get; set; } // atributo para o número de matricula
         public string RespBolsista { get; set; }
-
+        Escola esc = new Escola();
 
         public void AdicionarAluno() // metodo para adicionar o aluno
         {
-            
+
             //----------------Inserir o nome do aluno------------------
             Console.WriteLine("Qual o nome do(a) aluno(a): ");
             Nome = Console.ReadLine();
@@ -32,10 +33,10 @@ namespace Proj2
             }
 
             //----------Inserir o sexo do aluno-------------
-            Console.WriteLine($"Qual a idade do(a) {Nome}: ");
+            Console.WriteLine($"Qual a idade do(a) {Nome}:\n A idade deve ser maior que 5 e menor que 65!");
             uint idade;
-            while (!uint.TryParse(Console.ReadLine(), out idade) || (idade == 0))                       //validando se a idade do aluno é maior que zero e se é um número
-            Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
+            while (!uint.TryParse(Console.ReadLine(), out idade) || (idade < 5) || (idade > 65))                     //validando se a idade do aluno é maior que zero e se é um número
+                Console.WriteLine($"Invalido! Qual a idade do(a) {Nome}: ");
             Idade = idade;
 
             //--------------Ver se o aluno é bolsista-------------------
@@ -56,6 +57,11 @@ namespace Proj2
 
             Random rnd = new Random();
             NumeroMatricula = rnd.Next(0, 999999); // gerar número aleatorio 
+            while (esc.ListaAluno.Any(buscaNum => buscaNum.NumeroMatricula == NumeroMatricula))
+                NumeroMatricula = rnd.Next(0, 999999);
+
+            Console.WriteLine("Aluno cadastrado com sucesso");
+
         }
 
         public override string ToString() => $"O(a) aluno(a): {Nome}, tem {Idade} anos, seu sexo é {Sexo} e {RespBolsista} bolsista. " +
